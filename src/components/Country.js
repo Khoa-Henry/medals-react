@@ -1,14 +1,15 @@
-import { useState } from "react";
+const Country = (props) => {
+  const { countries, setCountries } = props;
 
-const Country = () => {
-  const [name, setname] = useState("United States");
-  const [gold, setGold] = useState(0);
+  const handleDelete = (id) => {
+    const foundIndex = countries.findIndex((c) => c.id === id);
+    const countriesClone = [...countries];
 
-  const handleOnClick = () => {
-    setGold(gold + 1);
+    countriesClone.splice(foundIndex, 1);
+    setCountries(countriesClone);
   };
 
-  return (
+  return countries.map((c) => (
     <div
       style={{
         border: "solid 1px",
@@ -17,8 +18,32 @@ const Country = () => {
         borderRadius: ".5rem",
       }}
     >
-      <h2 style={{ borderBottom: "solid 1px", padding: ".35rem", margin: "0" }}>
-        {name}
+      <h2
+        style={{
+          borderBottom: "solid 1px",
+          padding: ".35rem",
+          margin: "0",
+          fontSize: "1.5rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          fontWeight: "bold",
+        }}
+      >
+        {c.name}
+        <div
+          class="basket"
+          style={{
+            padding: ".25rem",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            handleDelete(c.id);
+          }}
+        >
+          🗑️
+        </div>
       </h2>
       <div
         style={{
@@ -28,23 +53,10 @@ const Country = () => {
           alignItems: "center",
         }}
       >
-        Gold medals: {gold}
-        <button
-          style={{
-            padding: ".25rem",
-            width: "1.5rem",
-            margin: "0 3px",
-            borderRadius: "8px",
-            border: "solid 1px",
-            cursor: "pointer",
-          }}
-          onClick={handleOnClick}
-        >
-          +
-        </button>
+        Gold medals: {c.gold}
       </div>
     </div>
-  );
+  ));
 };
 
 export default Country;
