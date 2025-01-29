@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Country from "./components/Country";
 
 function App() {
@@ -7,10 +7,19 @@ function App() {
     { id: 2, name: "China", gold: 3 },
     { id: 3, name: "France", gold: 0 },
   ]);
+  const medals = useRef([
+    { id: 1, name: "gold" },
+    { id: 2, name: "silver" },
+    { id: 3, name: "bronze" },
+  ]);
 
   return (
     <div style={{ display: "flex" }}>
-      <Country countries={countries} setCountries={setCountries} />
+      <Country
+        countries={countries}
+        setCountries={setCountries}
+        medals={medals}
+      />
     </div>
   );
 }
