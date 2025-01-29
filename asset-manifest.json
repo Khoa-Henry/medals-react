@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/medals-react/static/js/main.94ff0bc7.js",
+    "main.js": "/medals-react/static/js/main.d806dc5d.js",
     "index.html": "/medals-react/index.html",
-    "main.94ff0bc7.js.map": "/medals-react/static/js/main.94ff0bc7.js.map"
+    "main.d806dc5d.js.map": "/medals-react/static/js/main.d806dc5d.js.map"
   },
   "entrypoints": [
-    "static/js/main.94ff0bc7.js"
+    "static/js/main.d806dc5d.js"
   ]
 }
