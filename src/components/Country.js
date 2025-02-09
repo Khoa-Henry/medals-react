@@ -1,7 +1,8 @@
 import Medal from "./Medal";
 
 const Country = (props) => {
-  const { countries, setCountries, medals } = props;
+  const { countries, setCountries, medals, handleDecrement, handleIncrement } =
+    props;
 
   const handleDelete = (id) => {
     const foundIndex = countries.findIndex((c) => c.id === id);
@@ -10,8 +11,6 @@ const Country = (props) => {
     countriesClone.splice(foundIndex, 1);
     setCountries(countriesClone);
   };
-
-  console.log(medals);
 
   return countries.map((c) => (
     <div
@@ -35,6 +34,7 @@ const Country = (props) => {
         }}
       >
         {c.name}
+        <div>{c.gold + c.silver + c.bronze}</div>
         <div
           class="basket"
           style={{
@@ -56,7 +56,13 @@ const Country = (props) => {
         }}
       >
         {medals.current.map((m) => (
-          <Medal medal={m.name} />
+          <Medal
+            medal={m.name}
+            countryId={c.id}
+            amount={c[m.name]}
+            handleDecrement={handleDecrement}
+            handleIncrement={handleIncrement}
+          />
         ))}
       </div>
     </div>
