@@ -1,5 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import Country from "./components/Country";
+import NewCountry from "./components/NewCountry";
+import "./style.css";
 
 function App() {
   const [countries, setCountries] = useState([
@@ -13,6 +15,7 @@ function App() {
     { id: 2, name: "silver" },
     { id: 3, name: "bronze" },
   ]);
+  const dialogRef = useRef(null);
 
   const useTotalMedals = useMemo(() => {
     const totalMedals = countries.reduce((total, country) => {
@@ -41,6 +44,21 @@ function App() {
     );
   };
 
+  const submitNewCountry = (countryName) => {
+    const newCountry = {
+      id: Math.random() * 100,
+      name: countryName,
+      gold: 0,
+      silver: 0,
+      bronze: 0,
+    };
+
+    const countriesClone = [...countries];
+    countriesClone.push(newCountry);
+
+    setCountries(countriesClone);
+  };
+
   return (
     <div>
       <h1>Olympic Medals {useTotalMedals}</h1>
@@ -53,6 +71,12 @@ function App() {
           handleIncrement={handleIncrement}
         />
       </div>
+
+      <NewCountry dialogRef={dialogRef} submitNewCountry={submitNewCountry} />
+
+      <button className="fab" onClick={() => dialogRef.current?.showModal()}>
+        +
+      </button>
     </div>
   );
 }
