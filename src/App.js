@@ -1,13 +1,14 @@
-import { useMemo, useRef, useState } from "react";
+import axios from "axios";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Country from "./components/Country";
 import NewCountry from "./components/NewCountry";
 import "./style.css";
 
 function App() {
   const [countries, setCountries] = useState([
-    { id: 1, name: "United States", gold: 2, silver: 2, bronze: 3 },
-    { id: 2, name: "China", gold: 3, silver: 1, bronze: 0 },
-    { id: 3, name: "France", gold: 0, silver: 2, bronze: 2 },
+    // { id: 1, name: "United States", gold: 2, silver: 2, bronze: 3 },
+    // { id: 2, name: "China", gold: 3, silver: 1, bronze: 0 },
+    // { id: 3, name: "France", gold: 0, silver: 2, bronze: 2 },
   ]);
 
   const medals = useRef([
@@ -16,6 +17,16 @@ function App() {
     { id: 3, name: "bronze" },
   ]);
   const dialogRef = useRef(null);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://khn-medal-api-a0djcyg5g6cgcdg3.canadacentral-01.azurewebsites.net/Api/country"
+      )
+      .then((res) => {
+        setCountries(res.data);
+      });
+  });
 
   const useTotalMedals = useMemo(() => {
     const totalMedals = countries.reduce((total, country) => {
@@ -46,7 +57,7 @@ function App() {
 
   const submitNewCountry = (countryName) => {
     const newCountry = {
-      id: Math.random() * 100,
+      id: Math.random() * 10000,
       name: countryName,
       gold: 0,
       silver: 0,

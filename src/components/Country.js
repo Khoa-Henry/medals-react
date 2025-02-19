@@ -36,7 +36,7 @@ const Country = (props) => {
         {c.name}
         <div>{c.gold + c.silver + c.bronze}</div>
         <div
-          class="basket"
+          className="basket"
           style={{
             padding: ".25rem",
             fontSize: "16px",
