@@ -24,8 +24,16 @@ function App() {
         "https://khn-medal-api-a0djcyg5g6cgcdg3.canadacentral-01.azurewebsites.net/Api/country"
       )
       .then((res) => {
-        setCountries(res.data);
-      });
+        if (Array.isArray(res.data)) {
+          setCountries((prevCountries) => {
+            // Only update state if the new data is different
+            return JSON.stringify(prevCountries) !== JSON.stringify(res.data)
+              ? res.data
+              : prevCountries;
+          });
+        }
+      })
+      .catch((error) => console.error("Error fetching countries:", error));
   });
 
   const useTotalMedals = useMemo(() => {
@@ -55,19 +63,27 @@ function App() {
     );
   };
 
-  const submitNewCountry = (countryName) => {
-    const newCountry = {
-      id: Math.random() * 10000,
-      name: countryName,
-      gold: 0,
-      silver: 0,
-      bronze: 0,
-    };
+  const submitNewCountry = async (countryName) => {
+    try {
+      const newCountry = {
+        name: countryName,
+        gold: 0,
+        silver: 0,
+        bronze: 0,
+      };
 
-    const countriesClone = [...countries];
-    countriesClone.push(newCountry);
+      const response = await axios.post(
+        "https://khn-medal-api-a0djcyg5g6cgcdg3.canadacentral-01.azurewebsites.net/Api/country",
+        newCountry
+      );
 
-    setCountries(countriesClone);
+      const countriesClone = [...countries];
+      countriesClone.push(response.data);
+
+      setCountries(countriesClone);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

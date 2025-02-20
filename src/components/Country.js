@@ -1,15 +1,20 @@
+import axios from "axios";
 import Medal from "./Medal";
 
 const Country = (props) => {
   const { countries, setCountries, medals, handleDecrement, handleIncrement } =
     props;
 
-  const handleDelete = (id) => {
-    const foundIndex = countries.findIndex((c) => c.id === id);
-    const countriesClone = [...countries];
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(
+        `https://khn-medal-api-a0djcyg5g6cgcdg3.canadacentral-01.azurewebsites.net/Api/country/${id}`
+      );
 
-    countriesClone.splice(foundIndex, 1);
-    setCountries(countriesClone);
+      setCountries((prevCountries) => prevCountries.filter((c) => c.id !== id));
+    } catch (error) {
+      console.error("Error deleting country:", error);
+    }
   };
 
   return countries.map((c) => (
