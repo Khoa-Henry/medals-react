@@ -27,7 +27,7 @@ function App() {
         if (Array.isArray(res.data)) {
           setCountries((prevCountries) => {
             // Only update state if the new data is different
-            return JSON.stringify(prevCountries) !== JSON.stringify(res.data)
+            return prevCountries.length !== res.data.length
               ? res.data
               : prevCountries;
           });
